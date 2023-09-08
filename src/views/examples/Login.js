@@ -41,7 +41,7 @@ const Login = () => {
         email,
         password,
       })
-
+      console.log(response)
       const { tokenSession, user } = response.data;
 
       localStorage.setItem("token", tokenSession);
@@ -57,13 +57,13 @@ const Login = () => {
       setUserJson(updatedUserJson);
       setUserJson(user)
 
-      setAlertType(response.data.status);
-      setAlertMessage(response.data.message);
-      setShowAlert(true);
-
+      
       navigate("/admin/index");
     } catch (error) {
-      console.log(error);
+      setShowAlert(true);
+      setAlertType(error.response.data.status);
+      setAlertMessage(error.response.data.message);
+      
     }
   };
 

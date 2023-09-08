@@ -22,6 +22,7 @@ export default function SelectBuscador(props) {
   
   const handleInputChange = event => {
     const valorBusqueda = event.target.value;
+   
     setBusqueda(valorBusqueda);
     if (valorBusqueda === '') {
       setOpciones([]);
@@ -29,7 +30,8 @@ export default function SelectBuscador(props) {
       const filteredData = data?.map(record => {
         const [key, value] = Object.entries(record).find(([key, value]) =>
           value.toString().toLowerCase().includes(valorBusqueda.toLowerCase())
-        ) || [];
+          ) || [];
+          console.log(value)
        
         return {id:record._id, key, value };
       }).filter(result => result.key !== undefined);

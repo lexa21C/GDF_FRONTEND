@@ -220,7 +220,7 @@ const ModalExample = ({ isOpen, toggle, apiGet, type }) => {
                   htmlFor="start_date"
                   id="cuestion3"
                 >
-                 <span className="text-danger">*</span> Instructor lider
+                 <span className="text-danger">*</span> Instructor lider12
                 </label>
                 <i className="fa-regular fa-circle-question fa-sm  mx-1" ></i>
                 <Reactstrap.UncontrolledTooltip
@@ -232,6 +232,7 @@ const ModalExample = ({ isOpen, toggle, apiGet, type }) => {
                 </Reactstrap.UncontrolledTooltip>
                 <SelectSearch
                   apiGet={`api/v1/user/filter/formation_program/${formation_programId}`}
+                  span
                   onSelect={handleResultSelected}
                 />
               </Reactstrap.FormGroup>

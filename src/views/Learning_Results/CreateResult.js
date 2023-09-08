@@ -68,7 +68,8 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
     }
 
     if (type === false) {
-
+      
+      console.log(data.code)
       axios.post('api/v1/learningResults', data).then(
         (res) => {
           if (res.data.status === 'success') {
@@ -98,6 +99,7 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
         setAlertMessage(res.data?.message);
         setShowAlert(true);
         toggle(!toggle);
+        console.log(res.data?.message)
       }).catch((err)=>{
         setAlertType(err.status);
         setAlertMessage(err.message);

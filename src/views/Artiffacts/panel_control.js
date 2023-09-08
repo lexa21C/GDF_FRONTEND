@@ -136,14 +136,16 @@ const Index = () => {
             const records = await axios.get(
                 `api/v1/records/${formation_program}`
             );
+            console.log(records);
             setRecords(records.data.results)
             if (quarterId != null && modalQuarter === false) {
-                await axios.get(`api/v1/artifacts/quarter/${quarterId}`).then(
-                    ({ data }) => {
-                        setArtiffacts(data.results)
-                    }
-                )
-            }
+                console.log(quarterId)
+                 await axios.get(`api/v1/artifacts/quarter/${quarterId}`).then(
+                     ({ data }) => {
+                         setArtiffacts(data.results)
+                     }
+                 )
+             }
         }
         fetchData();
     }, [modalQuarter, ddelete, quarter, quarterId, modal]);

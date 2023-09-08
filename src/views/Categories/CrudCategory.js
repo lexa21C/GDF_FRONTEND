@@ -104,11 +104,13 @@ export default function ShowCategory() {
             setAlertType(res.data.status);
             setAlertMessage(res.data.message);
             setShowAlert(true);
+
               // Categoría editada exitosamente
               getCategory(); // Actualizar la lista de categorías
             }).catch((err) => {
               setAlertType(err.status);
               setAlertMessage(err.message);
+              console.log("error")
               setShowAlert(true);
             })
           toggleModal(); // Cerrar la modal
