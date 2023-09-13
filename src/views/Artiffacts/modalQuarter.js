@@ -50,7 +50,7 @@ export default function Modal({ isOpen, toggle, type, competences, quarter }) {
             if (type === false) {
                 show_alert('Creado Correctamente', 'success')
                 const { data: res } = axios.post('api/v1/quarter', data);
-                console.log(res);
+              
             } else {
                 show_alert('Editado correctamente', 'success')
                 const { data: res } = axios.put(`api/v1/quarter/${data._id}`, data);

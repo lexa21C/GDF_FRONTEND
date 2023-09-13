@@ -43,6 +43,7 @@ const BarChartGraphics = () => {
       })
       .catch((error) => {
         console.error('Error al obtener los datos de la API:', error);
+        // console.warn(error)
       });
   }, []);
 

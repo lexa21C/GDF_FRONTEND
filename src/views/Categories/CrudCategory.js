@@ -110,7 +110,6 @@ export default function ShowCategory() {
             }).catch((err) => {
               setAlertType(err.status);
               setAlertMessage(err.message);
-              console.log("error")
               setShowAlert(true);
             })
           toggleModal(); // Cerrar la modal

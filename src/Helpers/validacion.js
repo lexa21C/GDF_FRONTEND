@@ -15,10 +15,14 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
 
     // Validación de campo vacío
     if (inputValue.trim() === '') {
-      return 'Este campo es obligatorio.';
+      return 'Este campo es obligatorio.' ;
     }
     // Resto de las reglas de validación...
     if (type === 'email' && !emailRegex.test(inputValue)) {
+      return 'Ingrese una dirección de correo electrónico válida.';
+    }
+
+    if (type === 'select' && !emailRegex.test(inputValue)) {
       return 'Ingrese una dirección de correo electrónico válida.';
     }
 

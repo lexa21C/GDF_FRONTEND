@@ -130,7 +130,7 @@ export default function List() {
                             delay={0}
                             target={`icon1${learning_result.code}`}
                           >
-                            Editar
+                            Editar 
                           </Reactstrap.UncontrolledTooltip>
                         </td>
                       </tr>

@@ -55,7 +55,7 @@ const ListProgram = () => {
         axios.get(`http://localhost:3005/typeProgram`)
             .then((res) => {
                         setAPIData(res.data.data);
-                        // console.log(res.data.data);
+                       
                     })
     }
 

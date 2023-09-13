@@ -96,6 +96,7 @@ export default class PieChartGraphics extends PureComponent {
       }
     } catch (error) {
       console.log(error);
+      console.warn(error)
     }
   };
 

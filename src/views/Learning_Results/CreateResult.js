@@ -11,10 +11,12 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
   // alertas
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState('');
+  const [code, setCode] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
   //validación del formulario
   const [isValidForm, setIsValidForm] = useState(true);
+ 
 
   // Función para actualizar el estado isValidForm
   const setInputValidity = (isValid) => {
@@ -32,8 +34,9 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
     if (type === true) {
       const fetchData = async () => {
         const { data } = await axios.get(apiGetC);
-
+        console.log('get')
         setData(data.results);
+        setCode(data.results._id)
       };
       fetchData();
       setTitle("Editar");
@@ -41,7 +44,7 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
 
     } else {
       setData({
-        code: "",
+        _id: "",
         learning_result: "",
         competence: competenceid
       });
@@ -69,7 +72,7 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
 
     if (type === false) {
       
-      console.log(data.code)
+      
       axios.post('api/v1/learningResults', data).then(
         (res) => {
           if (res.data.status === 'success') {
@@ -77,7 +80,7 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
             toggle(!toggle);
 
             setData({
-              code: "",
+              _id: "",
               learning_result: "",
               competence: competenceid
             })
@@ -94,7 +97,8 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
         setShowAlert(true);
       });
     } else {
-      const { data: res } = axios.put(`api/v1/learningResults/${data._id}`, data).then((res)=>{
+      console.log(code)
+      const { data: res } = axios.put(`api/v1/learningResults/${code}`, data).then((res)=>{
         setAlertType(res.data?.status);
         setAlertMessage(res.data?.message);
         setShowAlert(true);

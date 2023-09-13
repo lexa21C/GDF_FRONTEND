@@ -40,24 +40,14 @@ const Profile = () => {
   const userCenter = userJson?.training_center[0]?.training_center || '';
 
   useEffect(() => {
-    if(updateProfile===true){
-      axios.get(`api/v1/user/${userJson._id}`).then((res) => {
-        setData(res.data.results)
-        localStorage.removeItem('User');
-        localStorage.setItem('User', JSON.stringify(res.data.results))
-        const updatedUserJson = JSON.parse(localStorage.getItem('User'));
-        setUserJson(updatedUserJson);
-        setAlertType(res.data.status);
-        setAlertMessage(res.data.message);
-        setShowAlert(true);
-      })
-    }
+  
     axios.get(`api/v1/user/show/${userJson._id}`).then((res)=>{
+      console.log('actualizo')
       setData(res.data.results)
       localStorage.removeItem('User');
       localStorage.setItem('User', JSON.stringify(res.data.results))
       const updatedUserJson = JSON.parse(localStorage.getItem('User'));
-      setUserJson(updatedUserJson);
+      setUserJson(updatedUserJson);   
     })
   }, [updateProfile]);
 
@@ -69,6 +59,8 @@ const Profile = () => {
     axios.put(`api/v1/user/${userJson._id}`, data)
       .then(() => {
         setUpdateProfile(!updateProfile); // Actualizar el estado 'updateProfile' para forzar una nueva llamada a la API
+        
+        // setUpdateProfile(true)
       })
       .catch((error) => {
         console.log(error);

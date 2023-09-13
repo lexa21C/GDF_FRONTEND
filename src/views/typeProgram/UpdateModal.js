@@ -51,9 +51,10 @@ function UpdateModal(data) {
                 initModal();
                 mensajes();
             });
-            console.log(res);
+            
         } catch (error) {
             console.log(error);
+            console.warn(error)
         }
     }
 

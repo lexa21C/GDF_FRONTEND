@@ -17,10 +17,8 @@ const ModalExample = ({ isOpen, toggle,  record }) => {
     const show=()=>{
         toggle(false)
     }
-    console.log(record);
     useEffect(() => {
          setData(record)
-         console.log(1);
     }, [isOpen])
     return (
         <Modal

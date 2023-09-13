@@ -15,6 +15,7 @@ const AreaChartFillByValue = () => {
       setData(response.data);
     } catch (error) {
       console.error(error);
+      // console.warn(error)
     }
   };
 
