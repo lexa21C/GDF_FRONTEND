@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Reactstrap from "reactstrap";
 
-const InputValidation = ({ label, type, placeholder, name, onChange, minLength, rows, value, setIsValid,secondDate  }) => {
+const InputValidation = ({ label, type, placeholder, name, onChange, minLength, rows, value, setIsValid,secondDate,isEditable  }) => {
   // Estados para almacenar el valor del input y el mensaje de error
   const [inputValue, setInputValue] = useState(value);
   const [errorMessage, setErrorMessage] = useState('');
@@ -83,6 +83,7 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
     return '';
   };
 
+
   // Función para manejar el cambio de valor en el input
   const handleInputChange = (event) => {
     const newValue = event.target.value;
@@ -107,6 +108,7 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
         name={name}
         rows={rows}
         required={true}  // Asegurarse de que el input tenga el atributo required si es obligatorio
+        disabled={!isEditable && name === 'code'}
       />
 
       {/* Mostrar mensaje de error si la validación falla */}

@@ -11,7 +11,6 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
   // alertas
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState('');
-  const [code, setCode] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
   //validación del formulario
@@ -31,12 +30,10 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
   const [nameButton, setNameButton] = useState("");
 
   useEffect(() => {
-    if (type === true) {
+    if (type === true) {  
       const fetchData = async () => {
         const { data } = await axios.get(apiGetC);
-        console.log('get')
         setData(data.results);
-        setCode(data.results._id)
       };
       fetchData();
       setTitle("Editar");
@@ -97,12 +94,16 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
         setShowAlert(true);
       });
     } else {
-      console.log(code)
-      const { data: res } = axios.put(`api/v1/learningResults/${code}`, data).then((res)=>{
+     
+      const { data: res } = axios.put(`api/v1/learningResults/${data._id}`, data).then((res)=>{
+        console.log(res.data.status)
+        if (res.data.status === 'success') {
+
+          toggle(!toggle);
+        }
         setAlertType(res.data?.status);
         setAlertMessage(res.data?.message);
         setShowAlert(true);
-        toggle(!toggle);
         console.log(res.data?.message)
       }).catch((err)=>{
         setAlertType(err.status);
@@ -148,6 +149,7 @@ const ModalResults = ({ isOpen, toggle, type, apiGetC }) => {
                         required
                         onChange={(value) => handleChange(value, '_id')}
                         setIsValid={setInputValidity} // Pasamos la función setIsValidForm al componente InputValidation
+                        isEditable={type === false }
                       />
                     </Reactstrap.FormGroup>
                   </Reactstrap.Col>

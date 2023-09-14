@@ -74,7 +74,7 @@ function CreateModal(props) {
 
             <Modal show={isShow}>
                 <Modal.Header  onClick={initModal}>
-                    <Modal.Title>Registrar Artefacto</Modal.Title>
+                    <Modal.Title>Registrar Artefacto </Modal.Title>
                 </Modal.Header>
 
                 <form onSubmit={handleSubmit}>
