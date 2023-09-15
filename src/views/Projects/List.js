@@ -209,7 +209,7 @@ export default function List() {
                               onClick={() => toggleA(data)}
                             >
                               <i className="fa-solid fa-file-contract"></i>
-
+                              
                             </Reactstrap.Button>
 
                             {/* boton editar proyecto */}

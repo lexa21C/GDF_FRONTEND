@@ -72,7 +72,15 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
       if (valueError === "Seleccione") {
         validacionSelect(valueError);
         return;
-      } else if (!data.name || !data.state || !data.date_presentation || !data.approval_date || selectedOptions.length === 0) {
+      } else if (
+        !data.name ||
+         !data.state || 
+         !data.specific_objectives ||
+         !data.glossary ||
+         !data.date_presentation ||
+         !data.approval_date || 
+         !data.category.length === 0 
+         ) {
         setShowFieldAlert(true); // Mostrar la alerta si falta algún campo requerido
         return;
       } else {
@@ -198,6 +206,7 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
     }
 
     if (type === false) {
+      console.log(data)
       axios.post("api/v1/project", data).then((res) => {
         if (res.data.status === 'success') {
 

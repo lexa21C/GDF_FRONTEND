@@ -87,7 +87,7 @@ export default function ListArteffacts({ isOpenA, id, toggleA }) {
                                     <th scope="col">N°</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Trimestre</th>
+                                    <th scope="col">Trimestre 232</th>
                                     <th scope="col">Acciones</th>
                                     <th scope="col" />
                                 </tr>

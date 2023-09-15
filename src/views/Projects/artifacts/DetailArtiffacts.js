@@ -7,25 +7,27 @@ const DetailArtiffacts = ({ artiffact, toggleShow }) => {
     const [artiffactD, setArtiffacts] = useState({})
 
     useEffect(() => {
-        async function Data() {
-            if (artiffact.artiffact) {
-                const get = await axios.get(
-                    `api/v1/artifacts/show/${artiffact.artiffact[0]._id}`
-                );
-                setArtiffacts(get.data.results)
-
-            } else {
-                const get = await axios.get(
-                    `api/v1/artifacts/show/${artiffact._id}`
-                );
-                setArtiffacts(get.data.results)
-
+        async function fetchData() {
+            try {
+                if (artiffact) {
+                    let url;
+                    if (artiffact.artiffact) {
+                        url = `api/v1/artifacts/show/${artiffact.artiffact[0]?._id}`;
+                    } else {
+                        url = `api/v1/artifacts/show/${artiffact?._id}`;
+                    }
+    
+                    const response = await axios.get(url);
+                    setArtiffacts(response.data.results);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
         }
-        Data();
-
-
-    }, [artiffact])
+    
+        fetchData();
+    }, [artiffact]);
+    
     return (
         <Reactstrap.Modal
         style={{ marginTop: '195px' }} 
