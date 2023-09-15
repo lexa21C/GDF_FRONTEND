@@ -87,6 +87,7 @@ const Index = () => {
     const [typeQuarter, setTypeQuarter] = useState(false)
     const [modalQuarter, setModalQuarter] = useState(false)
     const [artiffactsQuarter, setArtiffactsQuarter] = useState(false)
+    const [mostrarBoton , setMostrarBoton ] = useState(false)
 
     const [records, setRecords] = useState([])
 
@@ -152,6 +153,7 @@ const Index = () => {
     }, [modalQuarter, ddelete, modal]);
     useEffect(() => {
         console.log('quarte id')
+        
         if (artiffactsQuarter === true) { // Asegúrate de que quarterId no sea nulo
             axios.get(`api/v1/artifacts/quarter/${quarterId}`)
                 .then(({ data }) => {
@@ -204,12 +206,15 @@ const Index = () => {
                                             <Reactstrap.CardHeader className="bg-transparent">
                                                 <Reactstrap.Row className="align-items-center">
                                                     <div className="col">
+                                                        {mostrarBoton === true && (
+
                                                         <Reactstrap.Button color="primary"
                                                             type="button"
                                                             className="btn-circle btn-neutral "
                                                             onClick={toggle}>
                                                             <i className="ni ni-fat-add" />
                                                         </Reactstrap.Button>
+                                                        )}
                                                     </div>
                                                 </Reactstrap.Row>
                                             </Reactstrap.CardHeader>
@@ -300,10 +305,10 @@ const Index = () => {
                                             e?.quarters.map((r, index) => ( 
                                                 <tr key={r._id}>
                                                      <th>{index + 1}</th>
-                                                     <td onClick={() => {
-                                                        setQuarter(r);
+                                                     <td onClick={() => {           
                                                         setQuarterId(r._id);
                                                         setArtiffactsQuarter(!artiffactsQuarter);
+                                                        setMostrarBoton(true)
                                                     }}>
                                                         {r.number}
                                                     </td>

@@ -22,6 +22,8 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+  const [showFieldAlert, setShowFieldAlert] = useState(false);
+
 
   /*category*/
   const [categories, setCategory] = useState([]);
@@ -49,22 +51,42 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
   const [step, setStep] = useState(1);
 
 
-  const handleNext = () => {
+  // const handleNext = () => {
 
-    if(valueError === "Seleccione"){
-      validacionSelect(valueError)
-      return
-    }else{
+  //   if(valueError === "Seleccione"){
+  //     validacionSelect(valueError)
+  //     return
+  //   }else{
       
-    }
+  //   }
 
-    // Validar el formulario aquí
-    if (!isValidForm) {
-      // Si el formulario no es válido, no avanzar al siguiente paso
-      return;
-    }
-    setStep(step + 1);
-  };
+  //   // Validar el formulario aquí
+  //   if (!isValidForm) {
+    //     // Si el formulario no es válido, no avanzar al siguiente paso
+  //     return;
+  //   }
+  //   setStep(step + 1);
+  // };
+    const handleNext = () => {
+      // Verificar si los campos requeridos están completos
+      if (valueError === "Seleccione") {
+        validacionSelect(valueError);
+        return;
+      } else if (!data.name || !data.state || !data.date_presentation || !data.approval_date || selectedOptions.length === 0) {
+        setShowFieldAlert(true); // Mostrar la alerta si falta algún campo requerido
+        return;
+      } else {
+        setShowFieldAlert(false); // Ocultar la alerta si todos los campos están completos
+      }
+    
+      // Validar el formulario aquí
+      if (!isValidForm) {
+        // Si el formulario no es válido, no avanzar al siguiente paso
+        return;
+      }
+    
+      setStep(step + 1);
+    };
 
   const handlePrev = () => {
     setStep(step - 1);
@@ -90,6 +112,7 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
     setData({ ...data, category: selectedOption.map((e) => e.value) });
     setSelectedOptions(selectedOption);
   };
+  
 
   useEffect(() => {
     if (type === true) {
@@ -473,16 +496,22 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
                   </Reactstrap.Col>
 
                   <Reactstrap.Col col='12' className="d-flex justify-content-center mt-2">
-                    <Reactstrap.Button
-                      className="btn-primary  w-25 "
-                      color="primary" type="button"
-                      onClick={handleNext}
-                    >
-                      siguiente
-                    </Reactstrap.Button>
-
-                  </Reactstrap.Col>
-                </>)}
+      <Reactstrap.Button
+        className="btn-primary  w-25 "
+        color="primary"
+        type="button"
+        onClick={handleNext}
+      >
+        siguiente
+      </Reactstrap.Button>
+    </Reactstrap.Col>
+    {showFieldAlert && (
+      <div className="alert alert-danger mt-2">
+        Debe ingresar datos en todos los campos antes de continuar.
+      </div>
+    )}
+  </>
+)}
 
 
                 {step === 2 && (
