@@ -220,7 +220,7 @@ const ModalExample = ({ isOpen, toggle, apiGet, type }) => {
                   htmlFor="start_date"
                   id="cuestion3"
                 >
-                 <span className="text-danger">*</span> Instructor lider12
+                 <span className="text-danger">*</span> Instructor lider
                 </label>
                 <i className="fa-regular fa-circle-question fa-sm  mx-1" ></i>
                 <Reactstrap.UncontrolledTooltip

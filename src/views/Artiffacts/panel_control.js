@@ -86,8 +86,6 @@ const Index = () => {
     const [quarter, setQuarter] = useState([])
     const [typeQuarter, setTypeQuarter] = useState(false)
     const [modalQuarter, setModalQuarter] = useState(false)
-    const [artiffactsQuarter, setArtiffactsQuarter] = useState(false)
-    const [mostrarBoton , setMostrarBoton ] = useState(false)
 
     const [records, setRecords] = useState([])
 
@@ -128,7 +126,7 @@ const Index = () => {
         )
     }
     useEffect(() => {
-        console.log(quarterId)
+        setQuarterId(quarter?._id)
         async function fetchData() {
             const { data } = await axios.get(
                 `api/v1/quarter/${formation_program}`
@@ -138,37 +136,19 @@ const Index = () => {
             const records = await axios.get(
                 `api/v1/records/${formation_program}`
             );
-            console.log(records);
             setRecords(records.data.results)
-            // if (quarterId !== undefined) {
-            //     console.log(quarterId)
-            //      await axios.get(`api/v1/artifacts/quarter/${quarterId}`).then(
-            //          ({ data }) => {
-            //              setArtiffacts(data.results)
-            //          }
-            //      )
-            //  }
+            if (quarterId != null && modalQuarter === false) {
+                await axios.get(`api/v1/artifacts/quarter/${quarterId}`).then(
+                    ({ data }) => {
+                        setArtiffacts(data.results)
+                    }
+                )
+            }
         }
         fetchData();
-    }, [modalQuarter, ddelete, modal]);
-    useEffect(() => {
-        console.log('quarte id')
-        
-        if (artiffactsQuarter === true) { // Asegúrate de que quarterId no sea nulo
-            axios.get(`api/v1/artifacts/quarter/${quarterId}`)
-                .then(({ data }) => {
-                    setArtiffacts(data.results)
-                })
-                .catch((error) => {
-                    // Maneja errores si es necesario
-                    console.log(error)
-                });
-            
-        }
-    }, [artiffactsQuarter]);
-    
-   
-    
+    }, [modalQuarter, ddelete, quarter, quarterId, modal]);
+
+
     return (
         <>
             <Modal
@@ -206,15 +186,12 @@ const Index = () => {
                                             <Reactstrap.CardHeader className="bg-transparent">
                                                 <Reactstrap.Row className="align-items-center">
                                                     <div className="col">
-                                                        {mostrarBoton === true && (
-
                                                         <Reactstrap.Button color="primary"
                                                             type="button"
                                                             className="btn-circle btn-neutral "
                                                             onClick={toggle}>
                                                             <i className="ni ni-fat-add" />
                                                         </Reactstrap.Button>
-                                                        )}
                                                     </div>
                                                 </Reactstrap.Row>
                                             </Reactstrap.CardHeader>
@@ -305,14 +282,7 @@ const Index = () => {
                                             e?.quarters.map((r, index) => ( 
                                                 <tr key={r._id}>
                                                      <th>{index + 1}</th>
-                                                     <td onClick={() => {           
-                                                        setQuarterId(r._id);
-                                                        setArtiffactsQuarter(!artiffactsQuarter);
-                                                        setMostrarBoton(true)
-                                                    }}>
-                                                        {r.number}
-                                                    </td>
-
+                                                    <td onClick={() => setQuarter(r)}>{r.number}</td>
                                                     <td>
                                                         <Reactstrap.Button
                                                             color="primary"

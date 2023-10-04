@@ -343,11 +343,13 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
                           <span className="text-danger">*</span> Nombre del Proyecto
                         </label>
                         <InputValidation
+                        
                           placeholder="Ej: Bizsett"
                           type="text"
                           name="name"
                           value={data?.name}
-                          minLength={3}
+                          minLength={4}
+                          maxLength={50}
                           onChange={(value) => handleChange2(value, 'name')}
                           setIsValid={setInputValidity} // Pasamos la función setIsValidForm al componente InputValidation
                         />
@@ -543,7 +545,6 @@ const Modal = ({ isOpen, toggle, apiGet, type, apiGetC, record }) => {
                             name="problem_statement"
                             minLength={100}
                             value={data?.problem_statement}
-                            // required
                             onChange={(value) => handleChange2(value, 'problem_statement')}
                             setIsValid={setInputValidity} // Pasamos la función setIsValidForm al componente InputValidation
 

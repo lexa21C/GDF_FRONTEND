@@ -89,6 +89,8 @@ function CreateModal(props) {
                                 value={data.name}
                                 required
                                 onChange={handleChange}
+                                maxLength={50}
+
                             />
                         </Form.Group>
                         <div className='mt-2'>
@@ -102,6 +104,7 @@ function CreateModal(props) {
                                     value={data.description}
                                     required
                                     onChange={handleChange}
+                                    maxLength={150}
                                 />
                             </Form.Group>
                         </div>

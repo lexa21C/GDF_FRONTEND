@@ -104,7 +104,7 @@ export default function Modal({ isOpen, toggle, type, competences, quarter }) {
                                 <Reactstrap.Input
                                     className='form-control-alternative is-invalid'
                                     placeholder='Ej:1'
-                                    type='String'
+                                    type='number'
                                     name='number'
                                     value={data.number}
                                     required

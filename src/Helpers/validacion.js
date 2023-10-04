@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Reactstrap from "reactstrap";
 
-const InputValidation = ({ label, type, placeholder, name, onChange, minLength, rows, value, setIsValid,secondDate,isEditable  }) => {
+const InputValidation = ({ label, type, placeholder, name, onChange, minLength,  maxLength,rows, value, setIsValid,secondDate,isEditable  }) => {
   // Estados para almacenar el valor del input y el mensaje de error
   const [inputValue, setInputValue] = useState(value);
   const [errorMessage, setErrorMessage] = useState('');
@@ -17,6 +17,13 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
     if (inputValue.trim() === '') {
       return 'Este campo es obligatorio.' ;
     }
+    if (type === 'text' && maxLength && inputValue.length >= maxLength) {
+       return `El valor no debe tener más de ${maxLength} caracteres.`;
+     }
+     /// validacion type text
+     if (type === 'text' && minLength && inputValue.length < minLength) {
+       return `El valor debe tener al menos ${minLength} caracteres.`;
+     }
     // Resto de las reglas de validación...
     if (type === 'email' && !emailRegex.test(inputValue)) {
       return 'Ingrese una dirección de correo electrónico válida.';
@@ -26,10 +33,6 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
       return 'Ingrese una dirección de correo electrónico válida.';
     }
 
-    /// validacion type text
-    if (type === 'text' && minLength && inputValue.length < minLength) {
-      return `El valor debe tener al menos ${minLength} caracteres.`;
-    }
     
 
       // Validación de longitud mínima para textarea
@@ -71,6 +74,7 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
         }
       }
 
+      
       if (label === 'Fecha final') {
         const endDateValue = new Date(inputValue);
         const startDateValue = new Date(secondDate);
@@ -109,6 +113,7 @@ const InputValidation = ({ label, type, placeholder, name, onChange, minLength, 
         rows={rows}
         required={true}  // Asegurarse de que el input tenga el atributo required si es obligatorio
         disabled={!isEditable && name === 'code'}
+        
       />
 
       {/* Mostrar mensaje de error si la validación falla */}
