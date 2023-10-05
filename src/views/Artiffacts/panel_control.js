@@ -77,7 +77,7 @@ const Index = () => {
 
     const [artiffactOne, setArtiffactOne] = useState([])
     const [data, setData] = useState([])
-    const [quarterId, setQuarterId] = useState([])
+    const [quarterId, setQuarterId] = useState(null)
 
     const [modal, setModal] = useState(false)
     const [type, setType] = useState(false)
@@ -137,7 +137,7 @@ const Index = () => {
                 `api/v1/records/${formation_program}`
             );
             setRecords(records.data.results)
-            if (quarterId != null && modalQuarter === false) {
+            if (quarterId != null) {
                 await axios.get(`api/v1/artifacts/quarter/${quarterId}`).then(
                     ({ data }) => {
                         setArtiffacts(data.results)
