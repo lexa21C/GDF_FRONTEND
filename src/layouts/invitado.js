@@ -23,24 +23,24 @@ import { Container } from "reactstrap";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import routes from "../routes";
-import AdminNavbar from "components/Navbars/AdminNavbar";
-const Admin = (props) => {
-  console.log('props de layaout admin')
-  console.log(props)
+import AdminNavbar from "components/Navbars/InvitadoNavbar";
+const Invitado = (props) => {
+  console.log('invitado')
+  console.log(props.location)
   const mainContent = React.useRef(null);
   const location = useLocation();
+
+  const isInvitado = location.pathname.startsWith("/invitado"); 
+  console.log(isInvitado)
   const [typeProfile, setTypeProfile] = React.useState(null);
   const navigate = useNavigate();
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-    const storedTypeProfile = localStorage.getItem('User');
-    const json = JSON.parse(storedTypeProfile)
-    console.log('layaout')
-    console.log(json)
-    setTypeProfile(json.type_profile[0].type_profile);
-  }, [location]);       
+    setTypeProfile('Invitado');
+    
+  }, [isInvitado]);       
 
   const getRoutes = (routes) => {
 
@@ -48,8 +48,6 @@ const Admin = (props) => {
       const allowedRoutes = routes.filter((route) => {
         return (
           route?.permission?.p1 === typeProfile ||
-          route?.permission?.p2 === typeProfile ||
-          route?.permission?.p3 === typeProfile ||
           route?.Auth === false
         );
       });
@@ -57,8 +55,9 @@ const Admin = (props) => {
         // Si no hay rutas permitidas, redirigir a una página de acceso denegado o un mensaje de error
         return  navigate(-1)   
       }
+      console.log('rol')
+      console.log(typeProfile)
       console.log(typeProfile+'=='+route.name);
-      
       return allowedRoutes.map((route, index) => {
         return <Route key={index} path={route.path} element={route.element} />;
       });
@@ -83,7 +82,7 @@ const Admin = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/admin/index",
+          innerLink: "/invitado/projects",
           imgSrc: require("../assets/img/brand/argon-react.png"),
           imgAlt: "..."
         }}
@@ -119,4 +118,4 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
+export default Invitado;

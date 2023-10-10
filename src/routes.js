@@ -24,6 +24,7 @@ import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Competences from "views/Competences/List";
 import Projects from "views/Projects/List.js";
+import PublicProjects from "views/Projects/PublicProjects/ListProjects.js";
 import LearningResults from "views/Learning_Results/List.js";
 import Records from "views/Records/List.js";
 import FormationPrograms from "views/program_formation/List.js"
@@ -41,7 +42,7 @@ var routes = [
     layout: "/admin",
     Auth: "true",
     sidebar:true,
-    permission:  {p1:"Administrador", p2:"Instructor Lider",p3:"Instructor"}
+    permission:  {p1:"Administrador", p2:"Instructor Lider",p3:"Instructor",}
   },
   {
     path: "/icons",
@@ -198,6 +199,8 @@ var routes = [
     permission:  {p1:"Administrador", p2:"Instructor Lider"}
 
   },
+  
+  
   {
     path: "/*",
     name: "Error",
@@ -206,6 +209,27 @@ var routes = [
     Auth: false,
     sidebar: false
   },
+  // {
+  //   path: "/PublicProjects",
+  //   name: "PublicProjects",
+  //   icon: "ni ni-bulb-61 text-yellow",
+  //   element: <PublicProjects />,
+  //   layout: "/auth",
+  //   Auth: "false",
+  //   sidebar: true
+  // },
+ 
+  {
+    path: "/projects",
+    name: "Projects",
+    icon: "ni ni-bulb-61 text-yellow",
+    element: <PublicProjects />,
+    layout: "/invitado",
+    Auth: "false",
+    sidebar:true,
+    permission:  { p1:"Invitado"}
+  },
+  
   // {
   //   path: "/home",
   //   name: "Home",

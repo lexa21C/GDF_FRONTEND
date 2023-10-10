@@ -28,9 +28,12 @@ export default function Modal({ isOpen, toggle, type,competences ,quarterId,OneA
             if (type === false) {
                 show_alert('Creado Correctamente', 'success')
                 const { data: res } = axios.post('api/v1/artiffacts', data);
+
             } else {
+                
                 show_alert('Editado correctamente', 'success')
                 const { data: res } = axios.put(`api/v1/artiffacts/${data._id}`, data);
+                
             }
 
             toggle(!toggle);

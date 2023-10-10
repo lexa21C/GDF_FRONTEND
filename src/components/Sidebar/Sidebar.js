@@ -17,7 +17,7 @@
 */
 /*eslint-disable*/
 import { useState,useEffect } from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { NavLink as NavLinkRRD, Link, useLocation } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -56,7 +56,9 @@ var ps;
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
-  // verifies if routeName is the one active (in browser input)
+  const location = useLocation();
+  const [typeProfile, setTypeProfile] = useState(null);
+  // // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
@@ -64,42 +66,65 @@ const Sidebar = (props) => {
   const toggleCollapse = () => {
     setCollapseOpen((data) => !data);
   };
-  // closes the collapse
-  const closeCollapse = () => {
-    setCollapseOpen(false);
-  };
 
   // creates the links that appear in the left menu / Sidebar
 
-  const [typeProfile, setTypeProfile] = useState(null);
+
+  // Función para obtener el type_profile según la ruta o localStorage
+  const getTypeProfile = () => {
+    if (location.pathname.startsWith("/invitado")) {
+      // Ruta de invitado
+      return "Invitado";
+    } else {
+      // Ruta de admin, utiliza localStorage
+      const storedTypeProfile = localStorage.getItem("User");
+      const json = JSON.parse(storedTypeProfile);
+      if (json && json.type_profile && json.type_profile.length > 0) {
+        return json.type_profile[0].type_profile;
+      } else {
+        // Valor por defecto si no se encuentra en localStorage
+        return null; // o asigna un valor por defecto diferente
+      }
+    }
+  };
 
   useEffect(() => {
-    const storedTypeProfile = localStorage.getItem('User');
-    const json = JSON.parse(storedTypeProfile)
-    setTypeProfile(json.type_profile.map((e)=>{return e.type_profile }));
-    // console.log(json.type_profile.map((e)=>{return e.type_profile }));
-  }, []);
-  
+    // Llama a la función para obtener el type_profile
+    const profile = getTypeProfile();
+    setTypeProfile(profile);
+  }, [location.pathname]); // Escucha cambios en la ruta
+
+  // Función para crear los enlaces del menú
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
       if (prop.sidebar !== false) {
-        if(prop.permission?.p1==typeProfile || prop.permission?.p2==typeProfile || prop.permission?.p3==typeProfile || prop.Auth===false)
-        return (
-          <NavItem key={key}>
-            <NavLink
-              to={prop.layout + prop.path}
-              tag={NavLinkRRD}
-              onClick={closeCollapse}
-              activeclassname="active"
-            >
-              <i className={prop.icon} />
-              {prop.name}
-            </NavLink>
-          </NavItem>
-        );
+        if (
+          prop.permission?.p1 === typeProfile ||
+          prop.permission?.p2 === typeProfile ||
+          prop.permission?.p3 === typeProfile ||
+          prop.Auth === false
+        ) {
+          return (
+            <NavItem key={key}>
+              <NavLink
+                to={prop.layout + prop.path}
+                tag={NavLinkRRD}
+                onClick={closeCollapse}
+                activeclassname="active"
+              >
+                <i className={prop.icon} />
+                {prop.name}
+              </NavLink>
+            </NavItem>
+          );
+        }
       }
-
     });
+  };
+
+  // Función para cerrar el menú desplegable
+  const closeCollapse = () => {
+    setCollapseOpen(false);
   };
 
   const { bgColor, routes, logo } = props;

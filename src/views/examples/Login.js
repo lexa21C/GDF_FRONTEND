@@ -18,7 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "context/userContext.js";
 import AlertModal from '../../components/Alert/AlertModal.js'
 
-// import './login.css'
+
+ import './login.css'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,16 +42,19 @@ const Login = () => {
         email,
         password,
       })
-      console.log(response)
       const { tokenSession, user } = response.data;
-
+     
       localStorage.setItem("token", tokenSession);
       // localStorage.setItem("formation_program", user[0].formation_program[0]);
       // localStorage.setItem("_id", user[0]._id);
       localStorage.setItem("User", JSON.stringify(user));
+      console.log('json.stringify')
+      console.log(JSON.stringify(user))
       localStorage.setItem("isLogin", true);
       setIsLoggendIn(localStorage.getItem("isLogin"))
       const updatedUserJson = user;
+      console.log('updated ')
+      console.log(updatedUserJson)
 
       axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
 
@@ -65,6 +69,29 @@ const Login = () => {
       setAlertMessage(error.response.data.message);
       
     }
+  };
+  const invitado = async () => {
+      // localStorage.setItem("formation_program", user[0].formation_program[0]);
+      // localStorage.setItem("_id", user[0]._id);
+      // console.log('invitado')
+      // const user = {
+      //   "complete_names": "invitado",
+      //   "type_profile": [
+      //     {
+      //       "type_profile": "Invitado",
+      //     }
+      //   ],
+        
+          
+      // };
+      // const updatedUserJson = user;
+      // console.log('updated ')
+      // console.log(updatedUserJson)
+      // setUserJson(updatedUserJson);
+      // setUserJson(user)
+      navigate("/invitado/projects");
+    
+    
   };
 
     //ver y ocultar la cntraseña  
@@ -152,6 +179,15 @@ const Login = () => {
           <div className="text-center">
             <Button className="my-4" color="primary" type="submit">
               Iniciar sesion
+            </Button>
+          </div>
+          <div className="text-center">
+            <Button 
+            className="my-1 custom-button" 
+            color="primary" 
+            type="submit"
+            onClick={invitado}>
+              Invitado  
             </Button>
           </div>
         </Form>

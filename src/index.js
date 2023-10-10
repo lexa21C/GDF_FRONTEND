@@ -23,6 +23,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import InvitadoLayout from "layouts/invitado.js";
 import { ProtectedRoute } from "components/protected/proyecyedRoute.jsx";
 import axios from "axios";
 import { UserProvider } from "context/userContext";
@@ -42,6 +43,7 @@ root.render(
           </ProtectedRoute>
         } />
         <Route path="/auth/*" element={<AuthLayout />} />
+        <Route path="/invitado/*" element={<InvitadoLayout />} />
         <Route path="*" element={<Navigate to="/admin/index" />} />
         <Route path="*" element={<ErrorPage/>}  />
       </Routes>
