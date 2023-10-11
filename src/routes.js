@@ -221,13 +221,22 @@ var routes = [
  
   {
     path: "/projects",
-    name: "Projects",
+    name: "Projectos",
     icon: "ni ni-bulb-61 text-yellow",
     element: <PublicProjects />,
     layout: "/invitado",
     Auth: "false",
     sidebar:true,
     permission:  { p1:"Invitado"}
+  },
+  {
+    path: "/projects",
+    name: "Projectos",
+    icon: "ni ni-bulb-61 text-yellow",
+    element: <PublicProjects/>,
+    layout: "/admin",
+    Auth: "true",
+    permission:  {p1:"Administrador",p2:"Instructor Lider", p3:"Instructor" }
   },
   
   // {

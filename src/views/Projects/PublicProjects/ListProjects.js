@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import ModalDetail from './ModalDetail.js';
 import ListArteffacts from '../artifacts/ModalArtiffacts.js'
 import ALertModalCuestion from '../../../components/Alert/ALertModalCuestion.js'
-
+import './ListProjects.css'
 export default function List() {
   const [projects, setProjects] = useState([]);
   // const [artiffacts, setArtiffacts] = useState([]);
@@ -105,10 +105,21 @@ export default function List() {
           <div className="col">
             <Reactstrap.Card className="shadow">
               <Reactstrap.CardHeader className="border-0">
-
-                
-
                 <Reactstrap.Form className="navbar-search navbar-search form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                  <Reactstrap.FormGroup >
+                    <Reactstrap.InputGroup >
+                      <Reactstrap.InputGroupAddon addonType="prepend">
+                        <Reactstrap.InputGroupText >
+                          Filtrar:
+                        </Reactstrap.InputGroupText>
+                      </Reactstrap.InputGroupAddon>
+                      <Reactstrap.Input type="select" name="selectOption" id="selectOption"> 
+                        <option value="opcion1">Opción 1</option>
+                        <option value="opcion2">Opción 2</option>
+                        <option value="opcion3">Opción 3</option>
+                      </Reactstrap.Input>
+                    </Reactstrap.InputGroup>
+                  </Reactstrap.FormGroup>
                   <Reactstrap.FormGroup className="mb-0" value={searchTerm} onChange={handleInputChange}>
                     <Reactstrap.InputGroup className="input-group-alternative">
                       <Reactstrap.InputGroupAddon addonType="prepend">
@@ -186,14 +197,9 @@ export default function List() {
                             >
                               <i className="fa-solid fa-eye"></i>
 
-                            </Reactstrap.Button>
-
-                           
-
-                           
+                            </Reactstrap.Button>                          
                           </td>
                         </tr>
-
 
                       );
                     })
@@ -213,16 +219,7 @@ export default function List() {
                 </nav>
               </Reactstrap.CardFooter>
 
-              {/* Modal crear */}
-              <Modal
-                isOpen={modal}
-                toggle={toggle}
-                type={type}
-                record={selectedProject}
-                apiGet={`api/v1/project/show/${selectedProject?._id}`}
-                apiGetC={'api/v1/categories'}
-              />
-
+              
               {/* modal detalle  */}
               <ModalDetail
                 project={registroSeleccionado}
