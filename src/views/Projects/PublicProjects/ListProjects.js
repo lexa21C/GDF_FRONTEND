@@ -34,9 +34,10 @@ export default function List() {
 
   const { recordid } = useParams();
   const { number_record } = useParams();
-
-
-
+//program_formation
+const [programData, setProgramData] = useState([]);
+//select
+const [selectedOption, setSelectedOption] = useState(null);
 
   const toggle = () => {
     setModal(!modal);
@@ -76,19 +77,58 @@ export default function List() {
   const handleInputChange = event => {
     setSearchTerm(event.target.value);
   };
-
-  useEffect(() => {
-    async function fetchData() {
-
-      const { data } = await axios.get(
-        `api/v1/projects`
-      );
-      setProjects(data.results);
+  const handleSelectChange = (selectedOption) => {
+    console.log(selectedOption.target.value)
+   
+    setSelectedOption(selectedOption.target.value);
+};
+   // Function to fetch program data
+   const fetchProgramData = async () => {
+    try {
+      const response = await axios.get(`api/v1/formation_programs`); // Replace with the correct API URL
+      setProgramData(response.data.results);
+    } catch (error) {
+      console.error("Error fetching program data:", error);
     }
-    fetchData();
+  }
+//Funtion to fecth project data
+const fecthProjectData = async () => {
+  try {
+    const response = await axios.get(`api/v1/projects`);
+    setProjects(response.data.results);
+  } catch (error) {
+    
+    console.error("Error fetching project data:", error);
+  }
+}
+ // Function to fetch projects by formation program ID
+ const fetchProjectsByFormationProgram = async (formationPrograms_Id) => {
+  try {
+    setProjects([])
+    const response = await axios.get(`api/v1/projects/${formationPrograms_Id}`);
+    setProjects(response.data.results);
+    console.log('project')
+    console.log(projects)
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+  }
+}
+  useEffect(() => {
+    fetchProgramData()
+    
+    if(selectedOption == null) {
+      
+      fecthProjectData()
+    }
+    else(
+      
+      fetchProjectsByFormationProgram(selectedOption)
+      
+    )
+    
     
 
-  }, [showAlertCuestion, recordid, modal]);
+  }, [selectedOption]);
   const filteredProjects = projects
   ?.filter(project => (
     project.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
@@ -104,35 +144,37 @@ export default function List() {
         <Reactstrap.Row>
           <div className="col">
             <Reactstrap.Card className="shadow">
-              <Reactstrap.CardHeader className="border-0">
-                <Reactstrap.Form className="navbar-search navbar-search form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                  <Reactstrap.FormGroup >
-                    <Reactstrap.InputGroup >
-                      <Reactstrap.InputGroupAddon addonType="prepend">
-                        <Reactstrap.InputGroupText >
-                          Filtrar:
-                        </Reactstrap.InputGroupText>
-                      </Reactstrap.InputGroupAddon>
-                      <Reactstrap.Input type="select" name="selectOption" id="selectOption"> 
-                        <option value="opcion1">Opción 1</option>
-                        <option value="opcion2">Opción 2</option>
-                        <option value="opcion3">Opción 3</option>
-                      </Reactstrap.Input>
-                    </Reactstrap.InputGroup>
-                  </Reactstrap.FormGroup>
-                  <Reactstrap.FormGroup className="mb-0" value={searchTerm} onChange={handleInputChange}>
-                    <Reactstrap.InputGroup className="input-group-alternative">
-                      <Reactstrap.InputGroupAddon addonType="prepend">
-                        <Reactstrap.InputGroupText>
-                          <i className="fas fa-search" />
-                        </Reactstrap.InputGroupText>
-                      </Reactstrap.InputGroupAddon>
-
-                      <Reactstrap.Input placeholder="Buscar Proyecto" type="text" />
-                    </Reactstrap.InputGroup>
-                  </Reactstrap.FormGroup>
-                </Reactstrap.Form>
+            <Reactstrap.CardHeader className="border-0  justify-content-between">
+              <Reactstrap.FormGroup className="mb-0 ">
+                <Reactstrap.InputGroup className="input-group-alternative">
+                  <Reactstrap.InputGroupAddon addonType="prepend">
+                    <Reactstrap.InputGroupText>
+                      Filtrar:
+                    </Reactstrap.InputGroupText>
+                  </Reactstrap.InputGroupAddon>
+                  <Reactstrap.Input type="select" name="selectOption" id="selectOption" value={selectedOption} onChange={handleSelectChange}>
+                  
+                    {programData.map((program) => (
+                      <option key={program._id} value={program._id}>
+                        {program._id}
+                      </option>
+                    ))}
+                  </Reactstrap.Input> 
+                </Reactstrap.InputGroup>
+              </Reactstrap.FormGroup>   
+                <Reactstrap.FormGroup className="mb-0" value={searchTerm} onChange={handleInputChange}>
+                  <Reactstrap.InputGroup className="input-group-alternative">
+                    <Reactstrap.InputGroupAddon addonType="prepend">
+                      <Reactstrap.InputGroupText>
+                        <i className="fas fa-search" />
+                      </Reactstrap.InputGroupText>
+                    </Reactstrap.InputGroupAddon>
+                    <Reactstrap.Input placeholder="Buscar Proyecto" type="text" />
+                  </Reactstrap.InputGroup>
+                </Reactstrap.FormGroup>
               </Reactstrap.CardHeader>
+
+
               <Reactstrap.Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
